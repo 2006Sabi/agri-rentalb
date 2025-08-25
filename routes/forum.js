@@ -142,12 +142,34 @@ router.get("/posts/:id", async (req, res) => {
 // Create new forum post
 router.post("/posts", auth, async (req, res) => {
   try {
+    console.log("Forum post creation request:", {
+      body: req.body,
+      user: req.user,
+      headers: {
+        "content-type": req.headers["content-type"],
+        authorization: req.headers.authorization ? "Bearer [HIDDEN]" : "None",
+      },
+    });
+
     const { title, content, category, tags } = req.body;
 
-    if (!title || !content || !category) {
+    // Validate required fields
+    const errors = [];
+    if (!title || !title.trim()) {
+      errors.push("Title is required");
+    }
+    if (!content || !content.trim()) {
+      errors.push("Content is required");
+    }
+    if (!category || !category.trim()) {
+      errors.push("Category is required");
+    }
+
+    if (errors.length > 0) {
+      console.log("Forum post validation errors:", errors);
       return res.status(400).json({
         success: false,
-        message: "Title, content, and category are required",
+        message: errors.join(", "),
       });
     }
 
@@ -177,12 +199,12 @@ router.post("/posts", auth, async (req, res) => {
       message: error.message,
       stack: error.stack,
       user: req.user,
-      body: req.body
+      body: req.body,
     });
     res.status(500).json({
       success: false,
       message: "Error creating forum post",
-      error: process.env.NODE_ENV === 'development' ? error.message : undefined
+      error: process.env.NODE_ENV === "development" ? error.message : undefined,
     });
   }
 });
@@ -596,4 +618,4 @@ router.get("/search", async (req, res) => {
   }
 });
 
-module.exports = router; 
+module.exports = router;
