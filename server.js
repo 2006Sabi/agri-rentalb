@@ -85,22 +85,49 @@ mongoose
 // Routes
 console.log("Mounting routes...");
 try {
+  console.log("Mounting auth routes...");
   app.use("/api/auth", require("./routes/auth"));
+  
+  console.log("Mounting equipment routes...");
   app.use("/api/equipment", require("./routes/equipment"));
+  
+  console.log("Mounting products routes...");
   app.use("/api/products", require("./routes/products"));
+  
+  console.log("Mounting bookings routes...");
   app.use("/api/bookings", require("./routes/bookings"));
+  
+  console.log("Mounting admin routes...");
   app.use("/api/admin", require("./routes/admin"));
+  
+  console.log("Mounting crop-sell routes...");
   app.use("/api/crop-sell", require("./routes/cropSell"));
+  
+  console.log("Mounting forum routes...");
   app.use("/api/forum", require("./routes/forum"));
+  
+  console.log("Mounting crop-planner routes...");
   app.use("/api/crop-planner", require("./routes/cropPlanner"));
+  
+  console.log("Mounting voice routes...");
   app.use("/api/voice", require("./routes/voice"));
+  
+  console.log("Mounting predictions routes...");
   app.use("/api/predictions", require("./routes/predictions"));
+  
+  console.log("Mounting disease-detection routes...");
   app.use("/api/disease-detection", require("./routes/diseaseDetection"));
+  
+  console.log("Mounting reports routes...");
   app.use("/api/reports", require("./routes/reports"));
+  
+  console.log("Mounting cart routes...");
   app.use("/api/cart", require("./routes/cart"));
+  
   console.log("All routes mounted successfully");
 } catch (error) {
   console.error("Error mounting routes:", error);
+  console.error("Error stack:", error.stack);
   process.exit(1);
 }
 
