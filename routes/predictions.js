@@ -60,29 +60,61 @@ router.post("/", auth, upload.single("image"), async (req, res) => {
       });
     }
 
-    // Parse JSON fields
+    // Parse JSON fields with better error handling
     let parsedPrevention = [];
     let parsedAllPredictions = [];
     let parsedFertilizer = {};
     let parsedLocation = {};
 
     try {
+      // Handle prevention field
       if (prevention) {
-        parsedPrevention = JSON.parse(prevention);
+        if (typeof prevention === 'string') {
+          parsedPrevention = JSON.parse(prevention);
+        } else if (Array.isArray(prevention)) {
+          parsedPrevention = prevention;
+        } else {
+          throw new Error('prevention field must be a JSON string or array');
+        }
       }
+
+      // Handle allPredictions field
       if (allPredictions) {
-        parsedAllPredictions = JSON.parse(allPredictions);
+        if (typeof allPredictions === 'string') {
+          parsedAllPredictions = JSON.parse(allPredictions);
+        } else if (Array.isArray(allPredictions)) {
+          parsedAllPredictions = allPredictions;
+        } else {
+          throw new Error('allPredictions field must be a JSON string or array');
+        }
       }
+
+      // Handle fertilizer field
       if (fertilizer) {
-        parsedFertilizer = JSON.parse(fertilizer);
+        if (typeof fertilizer === 'string') {
+          parsedFertilizer = JSON.parse(fertilizer);
+        } else if (typeof fertilizer === 'object' && fertilizer !== null) {
+          parsedFertilizer = fertilizer;
+        } else {
+          throw new Error('fertilizer field must be a JSON string or object');
+        }
       }
+
+      // Handle location field
       if (location) {
-        parsedLocation = JSON.parse(location);
+        if (typeof location === 'string') {
+          parsedLocation = JSON.parse(location);
+        } else if (typeof location === 'object' && location !== null) {
+          parsedLocation = location;
+        } else {
+          throw new Error('location field must be a JSON string or object');
+        }
       }
     } catch (parseError) {
       return res.status(400).json({
         success: false,
-        message: "Invalid JSON format in request body",
+        message: `Invalid JSON format: ${parseError.message}`,
+        field: parseError.message.includes('field') ? parseError.message.split('field')[1].trim() : 'unknown'
       });
     }
 

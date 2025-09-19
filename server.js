@@ -33,6 +33,36 @@ app.use(
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
+// URL validation middleware to catch malformed requests early
+app.use((req, res, next) => {
+  // Check for malformed route patterns in the URL
+  const malformedPatterns = [
+    /:\s*$/, // Colon at end without parameter name
+    /:\W/, // Colon followed by non-word character
+    /[{}[\]()*+?^$|\\]/, // Special regex characters that might cause issues
+    /%7B|%7D|%5B|%5D|%28|%29/, // URL encoded special characters: { } [ ] ( )
+  ];
+  
+  let isMalformed = false; // Flag to track if a malformed URL is detected
+  
+  for (const pattern of malformedPatterns) {
+    if (pattern.test(req.path)) {
+      logger.warn(`Malformed URL pattern detected: ${req.path}`);
+      isMalformed = true; // Set flag to true if a malformed pattern is found
+      break; // Exit loop early if a match is found
+    }
+  }
+  
+  if (isMalformed) {
+    return res.status(400).json({
+      success: false,
+      message: "Invalid URL format",
+    });
+  }
+  
+  next();
+});
+
 // Debug middleware for request logging
 app.use((req, res, next) => {
   logger.info(`${req.method} ${req.path}`, {
@@ -151,6 +181,9 @@ app.use((error, req, res, next) => {
     params: req.params,
   });
 
+  // Sanitize error messages to remove debug URLs
+  const sanitizedMessage = error.message ? error.message.replace(/https:\/\/git\.new\/pathToRegexpError/g, "") : "Internal server error";
+
   if (error instanceof SyntaxError && error.status === 400 && "body" in error) {
     return res.status(400).json({
       success: false,
@@ -160,8 +193,8 @@ app.use((error, req, res, next) => {
 
   res.status(500).json({
     success: false,
-    message: "Internal server error",
-    error: process.env.NODE_ENV === "development" ? error.message : undefined,
+    message: sanitizedMessage,
+    error: process.env.NODE_ENV === "development" ? sanitizedMessage : undefined,
   });
 });
 

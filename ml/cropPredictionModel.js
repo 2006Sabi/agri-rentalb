@@ -2,6 +2,8 @@
 // This is a demonstration of how more advanced ML models could be integrated
 // In a production environment, you would use actual ML libraries like TensorFlow.js, scikit-learn, or cloud ML services
 
+const logger = require("../utils/logger");
+
 class CropPredictionModel {
   constructor() {
     // Initialize model parameters
@@ -378,7 +380,7 @@ class CropPredictionModel {
   trainModel(newData) {
     // In a real implementation, this would update model weights
     // based on new training data
-    console.log("Model training with new data:", newData);
+    logger.info("Model training with new data:", newData);
 
     // Update historical data
     if (newData.crop && newData.region && newData.yield) {

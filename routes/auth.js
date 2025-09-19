@@ -3,10 +3,17 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const User = require("../models/User");
 const auth = require("../middleware/auth");
-const { sendVerificationEmail, sendPasswordResetEmail } = require("../utils/emailService");
+const {
+  sendVerificationEmail,
+  sendPasswordResetEmail,
+} = require("../utils/emailService");
 const logger = require("../utils/logger");
 
 const router = express.Router();
+
+// ✅ Middleware to parse JSON & form data
+router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
 
 // Register
 router.post("/register", async (req, res) => {
@@ -57,7 +64,7 @@ router.post("/register", async (req, res) => {
       },
     });
   } catch (error) {
-    logger.error("Registration error:", error);
+    logger.error("Registration error:", error.message);
     res.status(500).json({ message: "Server error during registration" });
   }
 });
@@ -66,6 +73,12 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
+    }
 
     // Find user by email
     const user = await User.findOne({ email });
@@ -110,7 +123,7 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
-    logger.error("Login error:", error);
+    logger.error("Login error:", error.message);
     res.status(500).json({ message: "Server error during login" });
   }
 });
@@ -122,10 +135,9 @@ router.get("/profile", auth, async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-
     res.json(user);
   } catch (error) {
-    logger.error("Profile fetch error:", error);
+    logger.error("Profile fetch error:", error.message);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -134,9 +146,9 @@ router.get("/profile", auth, async (req, res) => {
 router.put("/profile", auth, async (req, res) => {
   try {
     const updates = req.body;
-    delete updates.password; // Don't allow password updates through this route
-    delete updates.email; // Don't allow email updates
-    delete updates.role; // Don't allow role updates
+    delete updates.password;
+    delete updates.email;
+    delete updates.role;
 
     const user = await User.findByIdAndUpdate(req.user.userId, updates, {
       new: true,
@@ -152,7 +164,7 @@ router.put("/profile", auth, async (req, res) => {
       user,
     });
   } catch (error) {
-    logger.error("Profile update error:", error);
+    logger.error("Profile update error:", error.message);
     res.status(500).json({ message: "Server error during profile update" });
   }
 });
@@ -168,25 +180,26 @@ router.post("/forgot-password", async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      // Don't reveal if user exists for security
-      return res.json({ message: "If the email exists, a reset link has been sent" });
+      return res.json({
+        message: "If the email exists, a reset link has been sent",
+      });
     }
 
-    // Generate reset token
     const resetToken = crypto.randomBytes(32).toString("hex");
-    const resetTokenExpires = new Date(Date.now() + 3600000); // 1 hour
+    const resetTokenExpires = new Date(Date.now() + 3600000);
 
     user.resetPasswordToken = resetToken;
     user.resetPasswordExpires = resetTokenExpires;
     await user.save();
 
-    // Send reset email
     await sendPasswordResetEmail(email, resetToken);
 
     res.json({ message: "If the email exists, a reset link has been sent" });
   } catch (error) {
-    logger.error("Forgot password error:", error);
-    res.status(500).json({ message: "Server error during password reset request" });
+    logger.error("Forgot password error:", error.message);
+    res
+      .status(500)
+      .json({ message: "Server error during password reset request" });
   }
 });
 
@@ -196,11 +209,15 @@ router.post("/reset-password", async (req, res) => {
     const { token, password } = req.body;
 
     if (!token || !password) {
-      return res.status(400).json({ message: "Token and password are required" });
+      return res
+        .status(400)
+        .json({ message: "Token and password are required" });
     }
 
     if (password.length < 6) {
-      return res.status(400).json({ message: "Password must be at least 6 characters" });
+      return res
+        .status(400)
+        .json({ message: "Password must be at least 6 characters" });
     }
 
     const user = await User.findOne({
@@ -209,10 +226,11 @@ router.post("/reset-password", async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired reset token" });
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired reset token" });
     }
 
-    // Update password and clear reset token
     user.password = password;
     user.resetPasswordToken = undefined;
     user.resetPasswordExpires = undefined;
@@ -220,7 +238,7 @@ router.post("/reset-password", async (req, res) => {
 
     res.json({ message: "Password reset successfully" });
   } catch (error) {
-    logger.error("Reset password error:", error);
+    logger.error("Reset password error:", error.message);
     res.status(500).json({ message: "Server error during password reset" });
   }
 });
@@ -231,7 +249,9 @@ router.get("/verify-email", async (req, res) => {
     const { token } = req.query;
 
     if (!token) {
-      return res.status(400).json({ message: "Verification token is required" });
+      return res
+        .status(400)
+        .json({ message: "Verification token is required" });
     }
 
     const user = await User.findOne({
@@ -240,10 +260,11 @@ router.get("/verify-email", async (req, res) => {
     });
 
     if (!user) {
-      return res.status(400).json({ message: "Invalid or expired verification token" });
+      return res
+        .status(400)
+        .json({ message: "Invalid or expired verification token" });
     }
 
-    // Mark user as verified and clear verification token
     user.isVerified = true;
     user.verificationToken = undefined;
     user.verificationTokenExpires = undefined;
@@ -251,7 +272,7 @@ router.get("/verify-email", async (req, res) => {
 
     res.json({ message: "Email verified successfully" });
   } catch (error) {
-    logger.error("Email verification error:", error);
+    logger.error("Email verification error:", error.message);
     res.status(500).json({ message: "Server error during email verification" });
   }
 });
@@ -260,7 +281,7 @@ router.get("/verify-email", async (req, res) => {
 router.post("/resend-verification", auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.userId);
-    
+
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -269,21 +290,21 @@ router.post("/resend-verification", auth, async (req, res) => {
       return res.status(400).json({ message: "Email is already verified" });
     }
 
-    // Generate new verification token
     const verificationToken = crypto.randomBytes(32).toString("hex");
-    const verificationTokenExpires = new Date(Date.now() + 86400000); // 24 hours
+    const verificationTokenExpires = new Date(Date.now() + 86400000);
 
     user.verificationToken = verificationToken;
     user.verificationTokenExpires = verificationTokenExpires;
     await user.save();
 
-    // Send verification email
     await sendVerificationEmail(user.email, verificationToken);
 
     res.json({ message: "Verification email sent successfully" });
   } catch (error) {
-    logger.error("Resend verification error:", error);
-    res.status(500).json({ message: "Server error during verification resend" });
+    logger.error("Resend verification error:", error.message);
+    res
+      .status(500)
+      .json({ message: "Server error during verification resend" });
   }
 });
 

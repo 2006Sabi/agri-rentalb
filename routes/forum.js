@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require("../middleware/auth");
 const ForumPost = require("../models/ForumPost");
 const ForumAnswer = require("../models/ForumAnswer");
+const logger = require("../utils/logger");
 
 // Get all forum posts with pagination and filters
 router.get("/posts", async (req, res) => {
@@ -76,7 +77,7 @@ router.get("/posts", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching forum posts:", error);
+    logger.error("Error fetching forum posts:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching forum posts",
@@ -142,7 +143,7 @@ router.get("/posts/:id", async (req, res) => {
 // Create new forum post
 router.post("/posts", auth, async (req, res) => {
   try {
-    console.log("Forum post creation request:", {
+    logger.info("Forum post creation request:", {
       body: req.body,
       user: req.user,
       headers: {
@@ -166,7 +167,7 @@ router.post("/posts", auth, async (req, res) => {
     }
 
     if (errors.length > 0) {
-      console.log("Forum post validation errors:", errors);
+      logger.warn("Forum post validation errors:", errors);
       return res.status(400).json({
         success: false,
         message: errors.join(", "),

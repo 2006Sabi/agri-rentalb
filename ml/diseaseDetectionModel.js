@@ -3,6 +3,7 @@
 // In production, you would use a pre-trained model like MobileNet or ResNet trained on PlantVillage dataset
 
 const sharp = require("sharp");
+const logger = require("../utils/logger");
 
 class DiseaseDetectionModel {
   constructor() {
@@ -164,13 +165,13 @@ class DiseaseDetectionModel {
 
   async loadModel() {
     // Simplified - no actual model loading needed
-    console.log("Disease detection model initialized (simulated)");
+    logger.info("Disease detection model initialized (simulated)");
     return true;
   }
 
   async preprocessImage(imageBuffer) {
     try {
-      console.log("Processing image with size:", imageBuffer.length);
+      logger.info("Processing image with size:", imageBuffer.length);
 
       // Validate input
       if (!imageBuffer || imageBuffer.length === 0) {
@@ -183,24 +184,24 @@ class DiseaseDetectionModel {
         .jpeg({ quality: 90 })
         .toBuffer();
 
-      console.log(
+      logger.info(
         "Image processed successfully, new size:",
         processedImage.length
       );
       return processedImage;
     } catch (error) {
-      console.error("Error preprocessing image:", error);
+      logger.error("Error preprocessing image:", error);
       throw new Error("Failed to process image: " + error.message);
     }
   }
 
   async predictDisease(imageBuffer) {
     try {
-      console.log("Starting image preprocessing...");
+      logger.info("Starting image preprocessing...");
 
       // Preprocess the image
       await this.preprocessImage(imageBuffer);
-      console.log("Image preprocessing completed");
+      logger.info("Image preprocessing completed");
 
       // Simulate prediction with random selection and confidence
       const randomIndex = Math.floor(
@@ -209,7 +210,7 @@ class DiseaseDetectionModel {
       const diseaseName = this.diseaseClasses[randomIndex];
       const diseaseInfo = this.diseaseInfo[diseaseName];
 
-      console.log("Selected disease:", diseaseName);
+      logger.info("Selected disease:", diseaseName);
 
       // Add some randomness to confidence
       const baseConfidence = diseaseInfo.confidence;
@@ -244,7 +245,7 @@ class DiseaseDetectionModel {
         allPredictions,
       };
 
-      console.log("Prediction result:", {
+      logger.info("Prediction result:", {
         diseaseName: result.diseaseName,
         confidence: result.confidence,
         severity: result.severity,
@@ -252,7 +253,7 @@ class DiseaseDetectionModel {
 
       return result;
     } catch (error) {
-      console.error("Error in disease prediction:", error);
+      logger.error("Error in disease prediction:", error);
       throw new Error("Failed to predict disease: " + error.message);
     }
   }

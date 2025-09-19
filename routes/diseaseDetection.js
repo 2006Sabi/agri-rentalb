@@ -4,6 +4,7 @@ const router = express.Router();
 const diseaseDetectionModel = require("../ml/diseaseDetectionModel");
 const Prediction = require("../models/Prediction");
 const auth = require("../middleware/auth");
+const logger = require("../utils/logger");
 
 // Configure multer for image uploads
 const storage = multer.memoryStorage();
@@ -26,17 +27,17 @@ const upload = multer({
 // Upload image and get disease prediction
 router.post("/predict", auth, upload.single("image"), async (req, res) => {
   try {
-    console.log("Disease detection request received");
+    logger.info("Disease detection request received");
 
     if (!req.file) {
-      console.log("No image file provided");
+      logger.warn("No image file provided");
       return res.status(400).json({
         success: false,
         message: "No image file provided",
       });
     }
 
-    console.log("Image file received:", {
+    logger.info("Image file received:", {
       originalName: req.file.originalname,
       mimetype: req.file.mimetype,
       size: req.file.size,
@@ -44,7 +45,7 @@ router.post("/predict", auth, upload.single("image"), async (req, res) => {
 
     // Validate file size
     if (req.file.size > 10 * 1024 * 1024) {
-      console.log("Image file too large:", req.file.size);
+      logger.warn("Image file too large:", req.file.size);
       return res.status(400).json({
         success: false,
         message: "Image file too large. Maximum size is 10MB.",
@@ -52,14 +53,14 @@ router.post("/predict", auth, upload.single("image"), async (req, res) => {
     }
 
     // Get prediction from model
-    console.log("Starting disease prediction...");
+    logger.info("Starting disease prediction...");
     const startTime = Date.now();
     const prediction = await diseaseDetectionModel.predictDisease(
       req.file.buffer
     );
     const processingTime = Date.now() - startTime;
 
-    console.log("Prediction completed:", {
+    logger.info("Prediction completed:", {
       diseaseName: prediction.diseaseName,
       confidence: prediction.confidence,
       processingTime,
@@ -71,7 +72,7 @@ router.post("/predict", auth, upload.single("image"), async (req, res) => {
     );
 
     // Store prediction in database
-    console.log("Storing prediction in database...");
+    logger.info("Storing prediction in database...");
     const storedPrediction = new Prediction({
       user: req.user.id,
       image: {
@@ -95,7 +96,7 @@ router.post("/predict", auth, upload.single("image"), async (req, res) => {
     });
 
     await storedPrediction.save();
-    console.log(
+    logger.info(
       "Prediction stored successfully with ID:",
       storedPrediction._id
     );
@@ -111,7 +112,7 @@ router.post("/predict", auth, upload.single("image"), async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error in disease prediction:", error);
+    logger.error("Error in disease prediction:", error);
     res.status(500).json({
       success: false,
       message: "Error processing image for disease detection",
@@ -131,7 +132,7 @@ router.get("/diseases", async (req, res) => {
       diseases: diseases,
     });
   } catch (error) {
-    console.error("Error fetching diseases:", error);
+    logger.error("Error fetching diseases:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching disease information",
@@ -162,7 +163,7 @@ router.get("/disease/:id", async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Error fetching disease info:", error);
+    logger.error("Error fetching disease info:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching disease information",
@@ -182,7 +183,7 @@ router.get("/metrics", async (req, res) => {
       metrics: metrics,
     });
   } catch (error) {
-    console.error("Error fetching metrics:", error);
+    logger.error("Error fetching metrics:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching model metrics",
@@ -212,7 +213,7 @@ router.post("/validate", async (req, res) => {
       diseaseId: diseaseId,
     });
   } catch (error) {
-    console.error("Error validating disease:", error);
+    logger.error("Error validating disease:", error);
     res.status(500).json({
       success: false,
       message: "Error validating disease",
@@ -234,7 +235,7 @@ router.get("/health", async (req, res) => {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    console.error("Error in health check:", error);
+    logger.error("Error in health check:", error);
     res.status(500).json({
       success: false,
       status: "unhealthy",
