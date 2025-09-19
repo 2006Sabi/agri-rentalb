@@ -21,7 +21,7 @@ const auth = async (req, res, next) => {
 
     logger.info("Auth middleware - Token exists, verifying...");
     if (!process.env.JWT_SECRET) {
-      logger.error("JWT_SECRET environment variable is not set");
+      console.error("JWT_SECRET environment variable is not set");
       return res.status(500).json({ message: "Server configuration error" });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
@@ -51,7 +51,7 @@ const auth = async (req, res, next) => {
     );
     next();
   } catch (error) {
-    logger.error("Auth middleware error:", error);
+    console.error("Auth middleware error:", error);
     if (error.name === "JsonWebTokenError") {
       return res.status(401).json({ message: "Invalid token format" });
     } else if (error.name === "TokenExpiredError") {

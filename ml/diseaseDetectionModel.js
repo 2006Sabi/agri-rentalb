@@ -190,7 +190,7 @@ class DiseaseDetectionModel {
       );
       return processedImage;
     } catch (error) {
-      logger.error("Error preprocessing image:", error);
+      console.error("Error preprocessing image:", error);
       throw new Error("Failed to process image: " + error.message);
     }
   }
@@ -253,7 +253,7 @@ class DiseaseDetectionModel {
 
       return result;
     } catch (error) {
-      logger.error("Error in disease prediction:", error);
+      console.error("Error in disease prediction:", error);
       throw new Error("Failed to predict disease: " + error.message);
     }
   }

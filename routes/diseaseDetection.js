@@ -112,7 +112,7 @@ router.post("/predict", auth, upload.single("image"), async (req, res) => {
       },
     });
   } catch (error) {
-    logger.error("Error in disease prediction:", error);
+    console.error("Error in disease prediction:", error);
     res.status(500).json({
       success: false,
       message: "Error processing image for disease detection",
@@ -132,7 +132,7 @@ router.get("/diseases", async (req, res) => {
       diseases: diseases,
     });
   } catch (error) {
-    logger.error("Error fetching diseases:", error);
+    console.error("Error fetching diseases:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching disease information",
@@ -163,7 +163,7 @@ router.get("/disease/:id", async (req, res) => {
       },
     });
   } catch (error) {
-    logger.error("Error fetching disease info:", error);
+    console.error("Error fetching disease info:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching disease information",
@@ -183,7 +183,7 @@ router.get("/metrics", async (req, res) => {
       metrics: metrics,
     });
   } catch (error) {
-    logger.error("Error fetching metrics:", error);
+    console.error("Error fetching metrics:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching model metrics",
@@ -213,7 +213,7 @@ router.post("/validate", async (req, res) => {
       diseaseId: diseaseId,
     });
   } catch (error) {
-    logger.error("Error validating disease:", error);
+    console.error("Error validating disease:", error);
     res.status(500).json({
       success: false,
       message: "Error validating disease",
@@ -235,7 +235,7 @@ router.get("/health", async (req, res) => {
       timestamp: new Date().toISOString(),
     });
   } catch (error) {
-    logger.error("Error in health check:", error);
+    console.error("Error in health check:", error);
     res.status(500).json({
       success: false,
       status: "unhealthy",

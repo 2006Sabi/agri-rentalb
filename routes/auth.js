@@ -7,8 +7,6 @@ const {
   sendVerificationEmail,
   sendPasswordResetEmail,
 } = require("../utils/emailService");
-const logger = require("../utils/logger");
-
 const router = express.Router();
 
 // ✅ Middleware to parse JSON & form data
@@ -42,7 +40,7 @@ router.post("/register", async (req, res) => {
 
     // Generate JWT token
     if (!process.env.JWT_SECRET) {
-      logger.error("JWT_SECRET environment variable is not set");
+      console.error("JWT_SECRET environment variable is not set");
       return res.status(500).json({ message: "Server configuration error" });
     }
     const token = jwt.sign(
@@ -64,7 +62,7 @@ router.post("/register", async (req, res) => {
       },
     });
   } catch (error) {
-    logger.error("Registration error:", error.message);
+    console.error("Registration error:", error.message);
     res.status(500).json({ message: "Server error during registration" });
   }
 });
@@ -101,7 +99,7 @@ router.post("/login", async (req, res) => {
 
     // Generate JWT token
     if (!process.env.JWT_SECRET) {
-      logger.error("JWT_SECRET environment variable is not set");
+      console.error("JWT_SECRET environment variable is not set");
       return res.status(500).json({ message: "Server configuration error" });
     }
     const token = jwt.sign(
@@ -123,7 +121,7 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
-    logger.error("Login error:", error.message);
+    console.error("Login error:", error.message);
     res.status(500).json({ message: "Server error during login" });
   }
 });
@@ -137,7 +135,7 @@ router.get("/profile", auth, async (req, res) => {
     }
     res.json(user);
   } catch (error) {
-    logger.error("Profile fetch error:", error.message);
+    console.error("Profile fetch error:", error.message);
     res.status(500).json({ message: "Server error" });
   }
 });
@@ -164,7 +162,7 @@ router.put("/profile", auth, async (req, res) => {
       user,
     });
   } catch (error) {
-    logger.error("Profile update error:", error.message);
+    console.error("Profile update error:", error.message);
     res.status(500).json({ message: "Server error during profile update" });
   }
 });
@@ -196,7 +194,7 @@ router.post("/forgot-password", async (req, res) => {
 
     res.json({ message: "If the email exists, a reset link has been sent" });
   } catch (error) {
-    logger.error("Forgot password error:", error.message);
+    console.error("Forgot password error:", error.message);
     res
       .status(500)
       .json({ message: "Server error during password reset request" });
@@ -238,7 +236,7 @@ router.post("/reset-password", async (req, res) => {
 
     res.json({ message: "Password reset successfully" });
   } catch (error) {
-    logger.error("Reset password error:", error.message);
+    console.error("Reset password error:", error.message);
     res.status(500).json({ message: "Server error during password reset" });
   }
 });
@@ -272,7 +270,7 @@ router.get("/verify-email", async (req, res) => {
 
     res.json({ message: "Email verified successfully" });
   } catch (error) {
-    logger.error("Email verification error:", error.message);
+    console.error("Email verification error:", error.message);
     res.status(500).json({ message: "Server error during email verification" });
   }
 });
@@ -301,7 +299,7 @@ router.post("/resend-verification", auth, async (req, res) => {
 
     res.json({ message: "Verification email sent successfully" });
   } catch (error) {
-    logger.error("Resend verification error:", error.message);
+    console.error("Resend verification error:", error.message);
     res
       .status(500)
       .json({ message: "Server error during verification resend" });

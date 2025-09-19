@@ -77,7 +77,7 @@ router.get("/posts", async (req, res) => {
       },
     });
   } catch (error) {
-    logger.error("Error fetching forum posts:", error);
+    console.error("Error fetching forum posts:", error);
     res.status(500).json({
       success: false,
       message: "Error fetching forum posts",
