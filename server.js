@@ -6,7 +6,9 @@ require("dotenv").config();
 
 const app = express();
 
-// ✅ Middleware
+// ==========================
+// ✅ Middleware Setup
+// ==========================
 app.use(
   cors({
     origin:
@@ -21,7 +23,9 @@ app.use(
 app.use(express.json({ limit: "10mb" }));
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
+// ==========================
 // ✅ MongoDB Connection
+// ==========================
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017/agri_rental";
 
@@ -33,7 +37,9 @@ mongoose
   .then(() => console.log("✅ MongoDB connected successfully"))
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
-// ✅ Import Routes
+// ==========================
+// ✅ Import Route Files
+// ==========================
 const authRoutes = require("./routes/auth");
 const equipmentRoutes = require("./routes/equipment");
 const productRoutes = require("./routes/products");
@@ -48,7 +54,9 @@ const diseaseRoutes = require("./routes/diseaseDetection");
 const reportRoutes = require("./routes/reports");
 const cartRoutes = require("./routes/cart");
 
-// ✅ Mount Routes
+// ==========================
+// ✅ Mount API Routes
+// ==========================
 app.use("/api/auth", authRoutes);
 app.use("/api/equipment", equipmentRoutes);
 app.use("/api/products", productRoutes);
@@ -63,28 +71,39 @@ app.use("/api/disease-detection", diseaseRoutes);
 app.use("/api/reports", reportRoutes);
 app.use("/api/cart", cartRoutes);
 
+// ==========================
 // ✅ Health Check Route
+// ==========================
 app.get("/", (req, res) => {
-  res.send("🌿 AgriRental API running successfully!");
+  res.send("🌾 AgriRental API running successfully!");
 });
 
-// ✅ Production build setup
+// ==========================
+// ✅ Serve React Frontend in Production
+// ==========================
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  const frontendPath = path.join(__dirname, "../frontend/dist");
+  app.use(express.static(frontendPath));
+
+  // ✅ Express 5 compatible wildcard route
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
 
-// ✅ Global Error Handler
+// ==========================
+// ✅ Global Error Handling
+// ==========================
 app.use((err, req, res, next) => {
-  console.error("Error:", err.stack);
+  console.error("❌ Error:", err.stack);
   res.status(500).json({
     success: false,
     message: err.message || "Internal Server Error",
   });
 });
 
-// ✅ Server Start
+// ==========================
+// ✅ Start the Server
+// ==========================
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
