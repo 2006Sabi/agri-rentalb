@@ -1,0 +1,56 @@
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-10-26 12:24:54","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-10-26 12:24:54"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-10-26 12:24:54"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-10-26 12:24:54"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-10-26 12:24:54","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-10-26 12:24:54"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-10-26 12:24:54"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-10-26 12:24:54"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:24:50","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:24:50"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:24:50"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:24:50"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:24:50","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:24:50"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:24:50"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:24:50"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:30:48","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:30:48"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:30:48"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:30:48"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:30:48","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:30:48"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:30:48"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:30:48"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:31:51","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:31:51"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:31:51"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:31:51"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:31:51","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:31:51"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:31:51"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:31:51"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:34:08","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:34:08"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:34:08"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:34:08"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:34:08","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:34:08"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:34:08"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:34:08"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:35:08","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:35:08"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:35:08"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:35:08"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:35:08","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:35:08"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:35:08"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:35:08"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:39:18","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:39:18"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:39:18"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:39:18"}
+{"authorization":"Bearer [HIDDEN]","level":"info","message":"Auth middleware - Request headers:","service":"agri-rental-server","timestamp":"2025-11-12 16:39:18","user-agent":"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/142.0.0.0 Safari/537.36"}
+{"level":"info","message":"Auth middleware - Token exists, verifying...","service":"agri-rental-server","timestamp":"2025-11-12 16:39:18"}
+{"level":"info","message":"Auth middleware - Token decoded, finding user...","service":"agri-rental-server","timestamp":"2025-11-12 16:39:18"}
+{"level":"info","message":"Auth middleware - Authentication successful for user:","service":"agri-rental-server","timestamp":"2025-11-12 16:39:18"}
