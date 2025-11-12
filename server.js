@@ -85,8 +85,8 @@ if (process.env.NODE_ENV === "production") {
   const frontendPath = path.join(__dirname, "../frontend/dist");
   app.use(express.static(frontendPath));
 
-  // ✅ Express 5 compatible wildcard route
-  app.get("/*", (req, res) => {
+  // ✅ Express 5–compatible wildcard route (regex version)
+  app.get("/(.*)", (req, res) => {
     res.sendFile(path.join(frontendPath, "index.html"));
   });
 }
